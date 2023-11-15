@@ -8,7 +8,13 @@ function DonationPage() {
     { name: "Abc Xyz", amount: 100 },
   ]);
 
+  const [donationAmount, setDonationAmount] = useState('');
+
   const totalAmount = donations.reduce((sum, donation) => sum + donation.amount, 0);
+
+  const handleAmountChange = (e) => {
+    setDonationAmount(e.target.value);
+  };
 
   return (
     <div className="donation-page">
@@ -26,6 +32,15 @@ function DonationPage() {
         <section className="donation-info">
           <p>Current amount: ${totalAmount}</p>
           <p>Number donations: {donations.length}</p>
+          <label htmlFor="donationAmount">Enter your donation amount:</label>
+          <input 
+            type="number" 
+            id="donationAmount"
+            value={donationAmount}
+            onChange={handleAmountChange}
+            placeholder="Amount"
+            className="donation-amount-input" 
+          />
           <button>Donate Here</button>
           <table className="donation-table">
             <thead>
