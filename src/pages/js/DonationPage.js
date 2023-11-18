@@ -1,4 +1,3 @@
-import image from '../../assets/images/images.jpg';
 import React, { useState, useEffect } from 'react';
 import '../css/DonationPage.css';
 
@@ -21,9 +20,7 @@ function DonationPage() {
       <div className="left-section">
         <section className="charity-info">
           <h2>Education Fund</h2>
-          <div className="media-container">
-            <img src={image} alt="Charity" />
-          </div>
+          <div className="media-container"></div>
           <textarea className="textarea" placeholder="Charity description"></textarea>
         </section>
       </div>
