@@ -27,13 +27,17 @@ contract CharityFund {
     event DonationReceived(uint256 fundIndex, address donor, uint256 amount);
     event GoalAchieved(uint256 fundIndex); // check if fund has reached goal
 
-    // Access Control
+    // Constructor
     constructor() {
         owner = msg.sender;
     }
 
+    /**
+     * Modifier
+     * This modifier checks to make sure the creator is the owner before executing the function. 
+     */
     modifier onlyOwner() {
-        require(msg.sender == owner, "Not the owner");
+        require(msg.sender == owner);
         _;
     }
 
