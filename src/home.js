@@ -6,21 +6,21 @@ function App() {
   const columns = React.useMemo(
     () => [
       { Header: 'Charity Name', accessor: 'name' },
-      // Add other column headers here if needed
+      { Header: 'Fund', accessor: 'number' }, // Added a new column for numbers
     ],
     []
   );
 
   const data = React.useMemo(
     () => [
-      { name: 'Charity 1' },
-      { name: 'Charity 2' },
-      { name: 'Charity 3' },
-      { name: 'Charity 4' },
-      { name: 'Charity 5' },
-      { name: 'Charity 6' },
-      { name: 'Charity 7' },
-      { name: 'Charity 8' },
+      { name: 'Charity 1', number: 100 },
+      { name: 'Charity 2', number: 200 },
+      { name: 'Charity 3', number: 300 },
+      { name: 'Charity 4', number: 400 },
+      { name: 'Charity 5', number: 500 },
+      { name: 'Charity 6', number: 600 },
+      { name: 'Charity 7', number: 700 },
+      { name: 'Charity 8', number: 800 },
       // Add other data rows here
     ],
     []
