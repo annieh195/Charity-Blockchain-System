@@ -1,13 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import '../css/DonationPage.css';
+import { initWeb3 } from './Web3Client'; // Import initWeb3 from Web3Client
 
 function DonationPage() {
-  const [donations, setDonations] = useState([
-    { name: "A H", amount: 50 },
-    { name: "Abc Xyz", amount: 100 },
-  ]);
+  const { charityName } = useParams(); // Getting the charity name from URL
+  const [charityInfo, setCharityInfo] = useState({ name: '', description: '', targetAmount: 0 });
+  const [donations, setDonations] = useState([]);
+/*
+  useEffect(() => {
+    // Fetch or compute charity information based on charityName
+    // Placeholder for fetching charity information
+    // setCharityInfo({ ...fetched data });
 
+    initWeb3(); // Initialize Web3
+  }, [charityName]);
+*/
   const [donationAmount, setDonationAmount] = useState('');
+
+  const handleDonate = async () => {
+
+    const newDonation = { name: "Your Name", amount: parseFloat(donationAmount) };
+    setDonations([...donations, newDonation]);
+    setDonationAmount('');
+  };
 
   const totalAmount = donations.reduce((sum, donation) => sum + donation.amount, 0);
 
@@ -19,9 +35,14 @@ function DonationPage() {
     <div className="donation-page">
       <div className="left-section">
         <section className="charity-info">
-          <h2>Education Fund</h2>
+          <h2>{charityInfo.name || 'Charity Name'}</h2>
           <div className="media-container"></div>
-          <textarea className="textarea" placeholder="Charity description"></textarea>
+          <textarea 
+            className="textarea" 
+            placeholder="Charity description"
+            value={charityInfo.description || ''}
+            readOnly
+          ></textarea>
         </section>
       </div>
 
@@ -38,7 +59,7 @@ function DonationPage() {
             placeholder="Amount"
             className="donation-amount-input" 
           />
-          <button>Donate Here</button>
+          <button onClick={handleDonate}>Donate Here</button>
           <table className="donation-table">
             <thead>
               <tr>
@@ -50,7 +71,7 @@ function DonationPage() {
               {donations.map((donation, index) => (
                 <tr key={index}>
                   <td>{donation.name}</td>
-                  <td>{donation.amount}</td>
+                  <td>${donation.amount}</td>
                 </tr>
               ))}
             </tbody>

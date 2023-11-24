@@ -6,11 +6,11 @@ function CreatePage() {
   const [charityName, setCharityName] = useState('');
   const [fundsRequired, setFundsRequired] = useState('');
   const [description, setDescription] = useState('');
-
+/*
   useEffect(() => {
     initWeb3();
 }, []);
-
+*/
   const createFund = async () => {
     if (!charityName || !fundsRequired || !description) {
       alert("Please fill all the fields");
