@@ -11,18 +11,27 @@ function CreatePage() {
     initWeb3();
 }, []);
 */
-  const createFund = async () => {
-    if (!charityName || !fundsRequired || !description) {
-      alert("Please fill all the fields");
-      return;
-    }
+// In CreatePage.js
 
-    console.log('Creating fund:', { charityName, fundsRequired, description });
-    await createNewFund(charityName, description, fundsRequired);
-    setCharityName('');
-    setFundsRequired('');
-    setDescription('');
-  };
+const createFund = async () => {
+  if (!charityName || !fundsRequired || !description) {
+    alert("Please fill all the fields");
+    return;
+  }
+
+  console.log('Creating fund:', { charityName, fundsRequired, description });
+  await createNewFund(charityName, description, fundsRequired);
+
+  // Retrieve existing charities and add new one
+  const existingCharities = JSON.parse(localStorage.getItem('charities')) || [];
+  existingCharities.push({ name: charityName, number: fundsRequired });
+  localStorage.setItem('charities', JSON.stringify(existingCharities));
+
+  setCharityName('');
+  setFundsRequired('');
+  setDescription('');
+};
+
 
   return (
     <div className="charity-container">

@@ -7,7 +7,7 @@ function DonationPage() {
   const { charityName } = useParams(); // Getting the charity name from URL
   const [charityInfo, setCharityInfo] = useState({ name: '', description: '', targetAmount: 0 });
   const [donations, setDonations] = useState([]);
-/*
+
   useEffect(() => {
     // Fetch or compute charity information based on charityName
     // Placeholder for fetching charity information
@@ -15,7 +15,7 @@ function DonationPage() {
 
     initWeb3(); // Initialize Web3
   }, [charityName]);
-*/
+
   const [donationAmount, setDonationAmount] = useState('');
 
   const handleDonate = async () => {

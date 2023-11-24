@@ -2,34 +2,29 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import CharityTable from './CharityTable';
 
+// In Home.js
+
 function Home() {
-  const navigate = useNavigate(); // Hook to enable programmatic navigation
+  const navigate = useNavigate();
 
   const columns = React.useMemo(
     () => [
       { Header: 'Charity Name', accessor: 'name' },
-      { Header: 'Fund', accessor: 'number' }, // Column for numbers
+      { Header: 'Fund', accessor: 'number' },
     ],
     []
   );
 
-  const data = React.useMemo(
-    () => [
-      { name: 'Charity 1', number: 100 },
-      { name: 'Charity 2', number: 200 },
-      { name: 'Charity 3', number: 300 },
-      { name: 'Charity 4', number: 400 },
-      { name: 'Charity 5', number: 500 },
-      { name: 'Charity 6', number: 600 },
-      { name: 'Charity 7', number: 700 },
-      { name: 'Charity 8', number: 800 },
-      // Add other data rows here
-    ],
-    []
-  );
+  // Read data from LocalStorage
+  const charityData = JSON.parse(localStorage.getItem('charities')) || [
+    // Default data if LocalStorage is empty
+    { name: 'Charity 1', number: 100 },
+    // ... other default rows
+  ];
+
+  const data = React.useMemo(() => charityData, [charityData]);
 
   const handleRowClick = (row) => {
-    // Use navigate to redirect to the charity-specific page
     navigate(`/donation/${row.original.name}`);
   };
 
@@ -39,5 +34,6 @@ function Home() {
     </div>
   );
 }
+
 
 export default Home;
