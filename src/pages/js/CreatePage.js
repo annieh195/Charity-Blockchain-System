@@ -23,7 +23,7 @@ const createFund = async () => {
   await createNewFund(charityName, description, fundsRequired);
 
   // Retrieve existing charities and add new one
-
+  if (window.confirm("Confirm")) {
   const existingCharities = JSON.parse(localStorage.getItem('charities')) || [];
   existingCharities.push({ 
     name: charityName, 
@@ -31,10 +31,11 @@ const createFund = async () => {
     description: description  // Include description here
   });
   localStorage.setItem('charities', JSON.stringify(existingCharities));
-
+  localStorage.clear();
   setCharityName('');
   setFundsRequired('');
   setDescription('');
+  }
 };
 
 
