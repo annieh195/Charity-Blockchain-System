@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import Navbar from './NavBar';
 import CharityTable from './CharityTable';
 
 function Home() {
@@ -36,7 +35,6 @@ function Home() {
 
   return (
     <div className="App">
-      <Navbar />
       <CharityTable columns={columns} data={data} onRowClick={handleRowClick} />
     </div>
   );
