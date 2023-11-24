@@ -31,7 +31,6 @@ const createFund = async () => {
     description: description  // Include description here
   });
   localStorage.setItem('charities', JSON.stringify(existingCharities));
-  localStorage.clear();
   setCharityName('');
   setFundsRequired('');
   setDescription('');
