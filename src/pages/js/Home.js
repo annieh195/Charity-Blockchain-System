@@ -18,8 +18,7 @@ function Home() {
   // Read data from LocalStorage
   const charityData = JSON.parse(localStorage.getItem('charities')) || [
     // Default data if LocalStorage is empty
-    { name: 'Charity 1', number: 100 },
-    // ... other default rows
+    { name: 'NULL', number: 100 },
   ];
 
   const data = React.useMemo(() => charityData, [charityData]);

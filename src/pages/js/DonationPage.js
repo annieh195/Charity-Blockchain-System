@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../css/DonationPage.css';
-import { initWeb3 } from './Web3Client'; // Import initWeb3 from Web3Client
+import { initWeb3 } from './Web3Client';
 
 function DonationPage() {
   const { charityName } = useParams(); // Getting the charity name from URL
@@ -9,11 +9,20 @@ function DonationPage() {
   const [donations, setDonations] = useState([]);
 
   useEffect(() => {
-    // Fetch or compute charity information based on charityName
-    // Placeholder for fetching charity information
-    // setCharityInfo({ ...fetched data });
-
     initWeb3(); // Initialize Web3
+
+    // Fetch charity information from LocalStorage
+    const allCharities = JSON.parse(localStorage.getItem('charities')) || [];
+    const foundCharity = allCharities.find(charity => charity.name === charityName);
+
+    if (foundCharity) {
+      // Assuming that the charity's description and targetAmount are stored as well
+      setCharityInfo({
+        name: foundCharity.name,
+        description: foundCharity.description,
+        targetAmount: foundCharity.number
+      });
+    }
   }, [charityName]);
 
   const [donationAmount, setDonationAmount] = useState('');
