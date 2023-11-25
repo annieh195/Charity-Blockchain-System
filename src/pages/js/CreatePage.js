@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { initWeb3, createNewFund } from './Web3Client';
+import { initWeb3, createNewFund } from '../../services/Web3Client.js';
 import '../css/CreatePage.css';
 
 function CreatePage() {
@@ -20,7 +20,7 @@ const createFund = async () => {
   }
 
   console.log('Creating fund:', { charityName, fundsRequired, description });
-  await createNewFund(charityName, description, fundsRequired);
+  await createNewFund(charityName, fundsRequired, description);
 
   // Retrieve existing charities and add new one
   if (window.confirm("Confirm")) {

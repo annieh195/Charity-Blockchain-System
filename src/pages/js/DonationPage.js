@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../css/DonationPage.css';
-import { initWeb3 } from './Web3Client';
+import { initWeb3, donateToFund, contractABI, contractAddress } from '../../services/Web3Client.js';
 
 function DonationPage() {
   const { charityName } = useParams(); // Getting the charity name from URL
@@ -28,6 +28,8 @@ function DonationPage() {
   const [donationAmount, setDonationAmount] = useState('');
 
   const handleDonate = async () => {
+    const fundIndex = 0;
+    await donateToFund(fundIndex, donationAmount, contractABI, contractAddress);
 
     const newDonation = { name: "Your Name", amount: parseFloat(donationAmount) };
     setDonations([...donations, newDonation]);
