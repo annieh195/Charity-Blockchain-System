@@ -1,57 +1,38 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import '../css/Common.css';
 import '../css/Login.css';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isRegistering, setIsRegistering] = useState(false);
   const navigate = useNavigate();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (isRegistering) {
-      try {
-        const response = await fetch('/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username, password })
-        });
-        if (response.ok) {
-          console.log('Registration successful');
-          setIsRegistering(false);
-        } else {
-          console.log('Registration failed');
-        }
-      } catch (error) {
-        console.error('Registration error:', error);
+    try {
+      const response = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await response.text();
+      if (response.ok) {
+        console.log('Login successful');
+        navigate('/');
+      } else {
+        console.log('Login failed:', data);
       }
-    } else {
-      try {
-        const response = await fetch('/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username, password })
-        });
-        if (response.ok) {
-          console.log('Login successful');
-          navigate('/');
-        } else {
-          console.log('Login failed');
-        }
-      } catch (error) {
-        console.error('Login error:', error);
-      }
+    } catch (error) {
+      console.error('Login error:', error);
     }
   };
 
   return (
     <div className="login-container">
-      <h2>{isRegistering ? 'Register' : 'Login'}</h2>
+      <h2>Login</h2>
       <form onSubmit={handleFormSubmit}>
         <input
           type="text"
@@ -67,13 +48,9 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">{isRegistering ? 'Register' : 'Login'}</button>
+        <button type="submit">Login</button>
       </form>
-      {isRegistering ? (
-        <p>Already have an account? <span onClick={() => setIsRegistering(false)}>Login here</span></p>
-      ) : (
-        <p>Don't have an account? <span onClick={() => setIsRegistering(true)}>Register here</span></p>
-      )}
+      <p>Don't have an account? <Link to="/register">Register here</Link></p>
     </div>
   );
 }
