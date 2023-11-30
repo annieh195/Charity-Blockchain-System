@@ -1,25 +1,20 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import '../css/NavBar.css';
 
 function NavBar() {
-  const navigate = useNavigate();
-
-  const handleCreatePage = () => {
-    navigate('/create');
-  }
-
-  const handleDonationPage = () => {
-    navigate('/');
-  }
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
 
   return (
     <div className="nav-bar">
       <span>ByteCoin</span>
-      <div className="button-container">
-        <button onClick={handleDonationPage}>Home</button>
-        <button onClick={handleCreatePage}>Create</button>
-      </div>
+      {!isAuthPage && (
+        <div className="button-container">
+          <Link to="/">Home</Link>
+          <Link to="/create">Create</Link>
+        </div>
+      )}
     </div>
   );
 }
