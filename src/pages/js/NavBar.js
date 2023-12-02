@@ -11,7 +11,7 @@ function NavBar() {
       <span>ByteCoin</span>
       {!isAuthPage && (
         <div className="button-container">
-          <Link to="/">Home</Link>
+          <Link to="/home">Home</Link>
           <Link to="/create">Create</Link>
         </div>
       )}

@@ -1,10 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs').promises;
+const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const app = express();
 const port = 3000;
+
+const cors = require('cors');
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,8 +36,9 @@ app.post('/register', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
+    console.log(req.body);
     const users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
-
+    
     if (!users[username]) {
         return res.status(401).send('User does not exist');
     }
