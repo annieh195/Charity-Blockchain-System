@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import '../css/Common.css';
 import '../css/Login.css';
 
-function Login() {
+function Login({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ function Login() {
       const data = await response.text();
       if (response.ok) {
         console.log('Login successful');
+        onLoginSuccess();
         navigate('/home');
       } else {
         console.log('Login failed:', data);
