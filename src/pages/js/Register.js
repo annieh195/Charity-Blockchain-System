@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import '../css/Common.css';
 import '../css/Register.css';
 
 function Register() {
