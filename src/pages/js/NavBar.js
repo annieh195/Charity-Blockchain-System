@@ -13,6 +13,7 @@ function NavBar() {
         <div className="button-container">
           <Link to="/home">Home</Link>
           <Link to="/create">Create</Link>
+          <Link to="/logout">Logout</Link>
         </div>
       )}
     </div>
