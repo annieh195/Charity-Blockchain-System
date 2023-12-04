@@ -261,7 +261,7 @@ const contractABI = [
         "constant": true
       }
 ]; // abi from CharityFund.json file
-const contractAddress = '0x8C553DC5157D74800985F88541Ff1Da65630e987'; // address from deployed contract in Ganache
+const contractAddress = '0x9B67Fb21Ee5FfD4daCf84b76598a90F4b514Ed06'; // address from deployed contract in Ganache
 
 // Initialization and setup
 const initWeb3 = async () => {
@@ -322,15 +322,32 @@ const donateToFund = async (fundIndex, donationAmount) => {
     
     const amountInWei = web3.utils.toWei(donationAmount, 'ether');
     const contract = new web3.eth.Contract(contractABI, contractAddress);
-    await contract.methods.donate(fundIndex).send({
+    const transactionReceipt = await contract.methods.donate(fundIndex).send({
       from: accounts[0],
       value: amountInWei
     });
 
-    console.log('Donation successful');
+    if (transactionReceipt && transactionReceipt.status) {
+      console.log('Donation successful');
+      return { success: true, account: accounts[0], amount: donationAmount };
+    } else {
+      console.log('Donation transaction failed');
+      return { success: false };
+    }
   } catch (error) {
     console.error('Error making donation:', error);
   }
 };
+/*const getUserAccount = async () => {
+  try {
+    // Get a list of accounts from the node
+    const accounts = await web3.eth.getAccounts();
+    // Return the first account, typically the user's account
+    return accounts[0];
+  } catch (error) {
+    console.error("Error retrieving user account:", error);
+    return null;
+  }
+};*/
 
 export { initWeb3, createNewFund, donateToFund, contractABI, contractAddress };
