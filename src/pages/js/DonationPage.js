@@ -39,15 +39,6 @@ function DonationPage() {
   const [accountName, setAccountName] = useState('');
   const [donationAmount, setDonationAmount] = useState('');
 
-  /*const fetchAccount = async () => {
-    const account = await getUserAccount();
-    if (account){
-      setAccountName(account);
-    }
-  };
-
-  fetchAccount();
-  */
 
   const handleDonate = async () => {
     if (parseFloat(donationAmount) > 0) {
@@ -113,7 +104,7 @@ function DonationPage() {
       <div className="right-section">
         <section className="donation-info">
           <p>Current amount: ${totalAmount}</p>
-          <p>Amount Required: ${charityInfo.targetAmount}</p>
+          <p>Amount required: ${charityInfo.targetAmount}</p>
           <p>Number donations: {donations.length}</p>
           <label htmlFor="donationAmount">Enter your donation amount:</label>
           <input 
