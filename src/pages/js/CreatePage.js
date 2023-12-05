@@ -13,7 +13,7 @@ const createFund = async () => {
     alert("Please fill all the fields");
     return;
   }
-
+  
   console.log('Creating fund:', { charityName, fundsRequired, description });
   await createNewFund(charityName, fundsRequired, description);
 
