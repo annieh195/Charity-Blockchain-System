@@ -322,15 +322,22 @@ const donateToFund = async (fundIndex, donationAmount) => {
     
     const amountInWei = web3.utils.toWei(donationAmount, 'ether');
     const contract = new web3.eth.Contract(contractABI, contractAddress);
-    await contract.methods.donate(fundIndex).send({
+    const transactionReceipt = await contract.methods.donate(fundIndex).send({
       from: accounts[0],
       value: amountInWei
     });
 
-    console.log('Donation successful');
+    if (transactionReceipt && transactionReceipt.status) {
+      console.log('Donation successful');
+      return { success: true, account: accounts[0], amount: donationAmount };
+    } else {
+      console.log('Donation transaction failed');
+      return { success: false };
+    }
   } catch (error) {
     console.error('Error making donation:', error);
   }
 };
+
 
 export { initWeb3, createNewFund, donateToFund, contractABI, contractAddress };
