@@ -17,16 +17,21 @@ app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'index.html'))
 
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
-    const users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
+    try {
+        const users = JSON.parse(await fs.promises.readFile('users.json', 'utf8'));
 
-    if (users[username]) {
-        return res.status(400).send('Username already exists');
+        if (users[username]) {
+            return res.status(400).send('Username already exists');
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        users[username] = hashedPassword;
+        await fs.promises.writeFile('users.json', JSON.stringify(users, null, 2));
+        res.send('Registration successful');
+    } catch (error) {
+        console.error('Error handling registration:', error);
+        res.status(500).send('Internal Server Error');
     }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    users[username] = hashedPassword;
-    fs.writeFileSync('users.json', JSON.stringify(users, null, 2));
-    res.send('Registration successful');
 });
 
 app.post('/login', async (req, res) => {

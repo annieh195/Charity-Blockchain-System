@@ -50,11 +50,7 @@ function DonationPage() {
           if (result.success) {
             console.log("Donation made by account:", result.account);
             console.log("Donation amount:", result.amount);
-            /*
-            setDonationInfo({ account: result.account, amount: result.amount });
-            setDonations([...donations, newDonation]);
-            setDonationAmount('');
-            */
+            
             const newDonation = { name: result.account, amount: result.amount };
             const updatedDonations = [...donations, newDonation];
             setDonations(updatedDonations);
