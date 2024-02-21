@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -53,6 +53,8 @@ const TableContainer = styled.div`
   text-align: center;
 `;
 
+
+
 const TableRow = styled.div`
   display: flex;
   justify-content: space-between;
@@ -68,18 +70,22 @@ const TableCell = styled.div`
   text-align: center;
 `;
 
-function Home() {
-  const navigate = useNavigate();
+function App() {
+  const [donations, setDonations] = useState([
+    { name: 'Charity 1', amountRaised: 1000 },
+    { name: 'Charity 2', amountRaised: 500 },
+    { name: 'Charity 3', amountRaised: 1200 },
+  ]);
 
-  const charityData = JSON.parse(localStorage.getItem('charities')) || [];
+  const totalRaised = useMemo(() => donations.reduce((total, charity) => total + charity.amountRaised, 0), [donations]);
 
   const handleRowClick = (row) => {
-    // Adjust based on how row data is structured
-    navigate(`/donation/${row.name}`);
+    console.log("Clicked row: ", row.original.name);
   };
 
   return (
     <AppContainer>
+      <Navbar />
       <MainContent>
         <ByteCoinHeading>Charity Funds</ByteCoinHeading>
         <DonationSection>
@@ -88,10 +94,10 @@ function Home() {
               <TableCell>Charity Name</TableCell>
               <TableCell>Money Raised</TableCell>
             </TableRow>
-            {charityData.map((charity, index) => (
-              <TableRow key={index} onClick={() => handleRowClick(charity)}>
+            {donations.map((charity, index) => (
+              <TableRow key={index}>
                 <TableCell>{charity.name}</TableCell>
-                <TableCell>${charity.number}</TableCell>
+                <TableCell>${charity.amountRaised}</TableCell>
               </TableRow>
             ))}
           </TableContainer>
@@ -104,4 +110,5 @@ function Home() {
   );
 }
 
-export default Home;
+export default App;
+
